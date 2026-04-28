@@ -6,11 +6,19 @@ Date: April - 26 - 2026
 <h2> Description </h2>
 
 <p>
-In this project, a natural language has been selected in order to construct and analyze a context-free grammar (CFG). The language chosen is German, which presents interesting structural characteristics such as grammatical gender, case distinctions, and a relatively strict sentence structure.
+In this project, a natural language has been selected in order to construct and analyze a context-free grammar (CFG). The language chosen is German (deutsch).
+</p>
+
+<p>
+German grammar is characterized by its structured and systematic nature, featuring three grammatical genders (masculine, feminine, and neuter) and four cases (nominative, accusative, dative, and genitive). Additionally, it follows relatively strict word order rules.
 </p>
 
 <p>
 German sentences generally follow a Subject–Verb–Object pattern, where the subject performs an action and the object receives it. However, the language also allows the inclusion of additional elements such as prepositional phrases, which can increase the complexity of sentence structure.
+</p>
+
+<p>
+Nouns are always capitalized, verbs are conjugated according to person, and sentence structure often places the verb in the second position in main clauses or at the end in subordinate clauses.  
 </p>
 
 <p>
@@ -34,14 +42,6 @@ A Context-Free Grammar is defined by four essential components:
   <li><strong>Start Symbol:</strong> The initial nonterminal from which all valid strings in the language are derived.</li>
 </ul>
 
-<p>
-In this project, I will work with the German language (Deutsch). German grammar is characterized by its structured and systematic nature, featuring three grammatical genders (masculine, feminine, and neuter) and four cases (nominative, accusative, dative, and genitive). Additionally, it follows relatively strict word order rules.
-</p>
-
-<p>
-Nouns are always capitalized, verbs are conjugated according to person, and sentence structure often places the verb in the second position in main clauses or at the end in subordinate clauses.
-</p>
-
 <h3> 
 Problematic 
 </h3>
@@ -55,11 +55,7 @@ This project focuses on building a simplified grammar for the German language an
 
 
 <p>
-The grammar is initially constructed with both ambiguity and left recursion in order to demonstrate how these issues arise. As the project progresses, these elements are systematically eliminated to restrict the grammar to a more specific and well-defined subset of the language.
-</p>
-
-<p>
-The main objective is to obtain a clean and efficient grammar that generates a single valid structure for each sentence and can be analyzed using deterministic parsing techniques.
+The grammar is initially designed with both ambiguity and left recursion in order to illustrate how these issues arise, and as the project progresses, these elements are gradually eliminated to refine the grammar into a more restricted and well-defined subset of the language. The main objective is to obtain a clean and efficient grammar that produces a single valid structure for each sentence, allowing it to be analyzed using deterministic parsing techniques.
 </p>
 
 <h2> Models </h2>
@@ -83,11 +79,14 @@ The terminals (alphabet) elements we are using are the following:
 </p>
 
 <pre>
-Det → der | die | das | ein 
-N   → Eisendrache | Mann | Hund | Frau | Wasser | Milch | Apfel | Kekse | Deutsch  
-V   → sein | sieht | reden | lehal |liebel | helfen | fragen | essen | gehen | kommen | geben | nehmen | findem | machen | laufen | trinken | denken | sagt | bringen | speilen
-Prep → mit | fur | in 
-Pron → ich | di | er | soe
+Det -> 'der' | 'den' | 'dem' | 'die' | 'das'
+N -> 'Eisendrache' | 'Mann' | 'Hund' | 'Frau' | 'Wasser' | 'Milch' | 'Apfel' | 'Kekse' | 'Deutsch' 
+V -> 'ist' | 'hat' | 'sieht' | 'trifft' | 'isst' | 'trinkt' | 
+     'geht' | 'kommt' | 'läuft' | 'macht' | 'gibt' | 'nimmt' | 
+     'findet' | 'denkt' | 'sagt' | 'bringt' | 'spielt' | 
+     'fragt' | 'hilft' | 'arbeitet' | 'liebt'
+Prep -> 'mit' | 'für' | 'in'
+Pron -> 'ich' | 'du' | 'er' | 'sie'
 </pre>
 
 <h3> Base Grammar - Ambiguous + Left Recursion </h3>
@@ -97,10 +96,10 @@ The initial grammar is the following:
 </p>
 
 <pre>
-S   → NP VP 
-NP  → Det N | Pron | NP PP
-VP  → V NP | V | VP PP
-PP  → Prep NP
+S   -> NP VP 
+NP  -> Det N | Pron | NP PP
+VP  -> V NP | V | VP PP
+PP  -> Prep NP
 </pre>
 
 <p>
@@ -119,19 +118,15 @@ The following section explains why ambiguity is problematic when developing a fu
 <h3> Ambiguity Explanation </h3>
 
 <p>
-In order to explain why ambiguity is problematic when developing a functional grammar, examples are presented where ambiguity makes the grammar more complex and harder to interpret.
+To show why ambiguity is a problem, The following sentence shows how ambiguity can appear, since it can be understood in different ways.
 </p>
-
 
 <pre>
 Der Mann trifft den Hund mit dem Stock
 </pre>
 
 <p>
-This sentence can be structurally ambiguous. The intended meaning is 
-"The man hits the dog with the stick"; however, the grammar allows 
-more than one interpretation depending on how the prepositional phrase 
-is attached.
+This sentence can be ambiguous. Although the intended meaning is "The man hits the dog with the stick", the sentence can also be understood in different ways depending on how the prepositional phrase is attached.
 </p>
 
 <p>
@@ -142,10 +137,9 @@ either the verb phrase or the noun phrase.
 <p><b>Tree 1:</b> Prepositional phrase attached to the verb phrase (VP)</p>
 
 <p>
-In this case, the phrase <b>mit dem Stock</b> modifies the action 
-<i>trifft</i>, meaning that the stick is used to perform the action.
+In this case, the phrase mit dem Stock modifies the action 
+trifft, indicating that the stick is being used as the tool to carry out the action, meaning the man hits the dog using the stick.
 </p>
-
 <pre>
 <img width="322" height="179" alt="TREE1AMBIGUITY" src="https://github.com/user-attachments/assets/f2950a44-00f0-4433-a9e2-8e29d57fb93a" />
 </pre>
@@ -153,9 +147,7 @@ In this case, the phrase <b>mit dem Stock</b> modifies the action
 <p><b>Tree 2:</b> Prepositional phrase attached to the noun phrase (NP)</p>
 
 <p>
-In this interpretation, the phrase <b>mit dem Stock</b> modifies the noun 
-<b>Hund</b>, meaning that the object is described together with the 
-prepositional phrase.
+This interpretation could be misunderstood as the dog having the stick while the action is taking place, meaning the sentence could be interpreted as "the man is hitting the dog that has the stick".
 </p>
 
 <pre>
@@ -182,21 +174,128 @@ To eliminate ambiguity, this rule is removed, restricting prepositional phrases 
 <p><b>New grammar:</b></p>
 
 <pre>
-S   → NP VP 
-NP  → Det N | Pron
-VP  → V NP | V | VP PP
-PP  → Prep NP
+S   -> NP VP 
+NP  -> Det N | Pron
+VP  -> V NP | V | VP PP
+PP  -> Prep NP
 </pre>
 
 <p>
 With this modification, each sentence now has a single valid structure.
 </p>
 
-<h3> Left Recursion Explanation </h3>
 <h3> Removing Left Recursion </h3>
 
+<p>
+To eliminate left recursion, the grammar is transformed by introducing a new non-terminal symbol:
+</p>
+
+<pre>
+VP    -> V NP Vrest | V Vrest
+Vrest -> PP Vrest | ε
+</pre>
+
+<p>
+This transformation removes left recursion by ensuring that the recursive call does not appear at the beginning of the production.
+</p>
+
+<p><b>Final grammar:</b></p>
+
+<pre>
+S     -> NP VP
+NP    -> Det N | Pron
+VP    -> V NP Vrest | V Vrest
+Vrest -> PP Vrest | ε
+PP    -> Prep NP
+</pre>
+
 <h2> Implementation: </h2>
+<h3> Usage of Python’s NLTK </h3>
+
+<p>
+To validate the grammar we implement it using Python’s NLTK library. In order to test the accepted strings the user must download NLTK library with the following command:
+</p>
+
+<pre>
+pip install nltk
+</pre>
+
+<p>
+After installing NLTK, the program can be executed by running the file 
+<i>FinalGrammarDeutsch.py</i>. The script defines the grammar using CFG.fromstring() 
+and analyzes input sentences using a ChartParser. The parser generates the 
+corresponding parse tree, allowing verification that ambiguity and left recursion 
+were removed successfully.
+</p>
+
 
 <h2> Testing: </h2>
+<p>
+Tests were run with strings that should be accepted and rejected. For each string, it was recorded whether the LL(1) parser accepted it and the resulting derivation or error encountered:
+</p>
 
-<h2> Analysis: </h2>
+<h3> Accepted strings: </h3>
+
+<ul>
+  <li>der Mann sieht die Frau</li>
+  <li>die Frau trifft den Mann</li>
+  <li>der Hund läuft</li>
+  <li>die Frau geht</li>
+  <li>der Mann kommt</li>
+  <li>der Mann nimmt den Apfel</li>
+  <li>die Frau gibt den Apfel</li>
+  <li>der Mann findet den Hund</li>
+</ul>
+
+<h3> Rejected strings: </h3>
+
+<ul>
+  <li>trifft der Mann den Hund</li>
+  <li>der Mann den Hund trifft</li>
+  <li>der Mann trifft den</li>
+  <li>Mann trifft den Hund</li>
+  <li>der Mann läuft den Hund</li>
+  <li>die Frau sieht</li>
+  <li>der Mann den Apfel</li>
+  <li>der Mann trifft mit dem Stock</li>
+</ul>
+
+<p>
+These results confirm that the grammar correctly accepts valid structures and rejects invalid ones, demonstrating its correctness.
+</p>
+
+<h2>Analysis</h2>
+
+<h3>Chomsky Hierarchy </h3>
+<h4> Before Cleaning </h4>
+<p>
+The original grammar is a Context-Free Grammar.
+It is not regular because it uses recursive productions and hierarchical structures such as NP, VP, and PP.
+However, it is ambiguous and contains left recursion, which makes parsing harder.
+</p>
+
+<h4> After Cleaning </h4>
+<p>
+After removing ambiguity and left recursion, the final grammar G3 is still Type 2.
+It remains context-free because the left side of each production is a single nonterminal.
+However, it is now cleaner, more deterministic, and better suited for LL(1) parsing.
+</p>
+
+<h3>Time Complexity</h3>
+<h4> Before Cleaning </h4>
+<p>
+Before cleaning, the grammar may require a general CFG parser, such as Earley or CYK.
+These parsers can take O(n³) time in the worst case because they may explore multiple possible parse trees.
+</p>
+<h4> After Cleaning </h4>
+<p>
+After cleaning, the grammar can be parsed more efficiently using deterministic parsing techniques.
+An LL(1) parser can analyze the input in O(n) time because it reads the sentence from left to right and applies one production at a time without backtracking.
+</p>
+
+<h2> Sources </h2>
+<p>GeeksforGeeks. (2025, 23 julio). What is ContextFree Grammar? GeeksforGeeks. https://www.geeksforgeeks.org/theory-of-computation/what-is-context-free-grammar</p>
+<p>GeeksforGeeks. (2026, 12 febrero). Chomsky Hierarchy in Theory of Computation. GeeksforGeeks. https://www.geeksforgeeks.org/chomsky-hierarchy-in-theory-of-computation</p>
+<p>GeeksforGeeks. (2026, 24 abril ). Ambiguous grammar. GeeksforGeeks. https://www.geeksforgeeks.org/ambiguous-grammar/</p>
+<p>GeeksforGeeks. (2025,11 julio ). Construction of LL(1) Parsing Table. GeeksforGeeks. https://www.geeksforgeeks.org/compiler-design/construction-of-ll1-parsing-table/</p>
+<p>Keel, W. D. (2006). [Review of Basic German: A Grammar and Workbook, by H. Schenke & K. Seago]. The Modern Language Journal, 90(3), 444–444. http://www.jstor.org/stable/3876855 </p>
