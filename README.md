@@ -86,68 +86,85 @@ The terminals (alphabet) elements we are using are the following:
 Det → der | die | das | ein 
 N   → Eisendrache | Mann | Hund | Frau | Wasser | Milch | Apfel | Kekse | Deutsch  
 V   → sein | sieht | reden | lehal |liebel | helfen | fragen | essen | gehen | kommen | geben | nehmen | findem | machen | laufen | trinken | denken | sagt | bringen | speilen
-Prep → ich | du | er |sie 
-Pron → mit 
+Prep → mit | fur | in 
+Pron → ich | di | er | soe
 </pre>
-
----
 
 <h3> Base Grammar - Ambiguous + Left Recursion </h3>
 
 <p>
-Present the initial grammar:
+The initial grammar is the following:
 </p>
 
 <pre>
 S   → NP VP 
-NP  → V NP |VP PP 
-VP  → Det N | Pron |NP PP
+NP  → Det N | Pron | NP PP
+VP  → V NP | V | VP PP
 PP  → Prep NP
 </pre>
 
 <p>
-Explain that this grammar contains ambiguity and left recursion.
-This innital contains amibiguity and left recursion. <br>
-You can notice ambiguity when you get to build some sentences and you can go through multple solutions that can get to change the meaning of the phrase developed. Left Recursion is present in this grammar because it presents 
-
-The following segment gets to explain why 
-  
+This initial grammar contains both ambiguity and left recursion. 
+Ambiguity can be observed when certain sentences can be derived in multiple ways, resulting in different syntactic structures and potentially different interpretations of the same phrase.
 </p>
 
----
+<p>
+Left recursion occurs when a rule starts by referencing itself. This can create problems during parsing, since the parser may keep expanding the same rule over and over again, leading to an infinite loop.
+</p>
+
+<p>
+The following section explains why ambiguity is problematic when developing a functional grammar and why it is necessary to eliminate it in order to achieve a clear and consistent structure.
+</p>
 
 <h3> Ambiguity Explanation </h3>
 
 <p>
-Introduce the test sentence:
+In order to explain why ambiguity is problematic when developing a functional grammar, examples are presented where ambiguity makes the grammar more complex and harder to interpret.
 </p>
 
-<blockquote>
+
+<pre>
 Der Mann trifft den Hund mit dem Stock
-</blockquote>
+</pre>
 
 <p>
-Explain why it is ambiguous (two possible interpretations).
+This sentence can be structurally ambiguous. The intended meaning is 
+"The man hits the dog with the stick"; however, the grammar allows 
+more than one interpretation depending on how the prepositional phrase 
+is attached.
 </p>
 
-<p><b>Tree 1:</b> PP attached to VP</p>
+<p>
+This ambiguity occurs because the phrase <b>mit dem Stock</b> can modify 
+either the verb phrase or the noun phrase.
+</p>
 
-<pre>
-[insert tree]
-</pre>
-
-<p><b>Tree 2:</b> PP attached to NP</p>
-
-<pre>
-[insert tree]
-</pre>
-
----
-
-<h3> Removing Ambiguity (G2) </h3>
+<p><b>Tree 1:</b> Prepositional phrase attached to the verb phrase (VP)</p>
 
 <p>
-Explain which rule causes ambiguity:
+In this case, the phrase <b>mit dem Stock</b> modifies the action 
+<i>trifft</i>, meaning that the stick is used to perform the action.
+</p>
+
+<pre>
+<img width="322" height="179" alt="TREE1AMBIGUITY" src="https://github.com/user-attachments/assets/f2950a44-00f0-4433-a9e2-8e29d57fb93a" />
+</pre>
+
+<p><b>Tree 2:</b> Prepositional phrase attached to the noun phrase (NP)</p>
+
+<p>
+In this interpretation, the phrase <b>mit dem Stock</b> modifies the noun 
+<b>Hund</b>, meaning that the object is described together with the 
+prepositional phrase.
+</p>
+
+<pre>
+<img width="321" height="198" alt="TREE2AMBIGUITY" src="https://github.com/user-attachments/assets/dfe36ad8-cba6-4eb3-a704-a10fd6984f19" />
+</pre>
+<h3> Removing Ambiguity </h3>
+
+<p>
+The ambiguity in the grammar is caused by the following rule:
 </p>
 
 <pre>
@@ -155,64 +172,31 @@ NP → NP PP
 </pre>
 
 <p>
-Explain that it is removed to restrict interpretation.
+This rule allows prepositional phrases to attach to noun phrases, creating multiple possible interpretations for the same sentence.
 </p>
-
-<p>New grammar:</p>
-
-<pre>
-S   → ...
-NP  → ...
-VP  → ...
-PP  → ...
-</pre>
-
----
-
-<h3> Removing Left Recursion (G3) </h3>
 
 <p>
-Identify left recursion:
+To eliminate ambiguity, this rule is removed, restricting prepositional phrases to only modify verb phrases.
 </p>
 
+<p><b>New grammar:</b></p>
+
 <pre>
-VP → VP PP
+S   → NP VP 
+NP  → Det N | Pron
+VP  → V NP | V | VP PP
+PP  → Prep NP
 </pre>
 
 <p>
-Explain transformation process.
+With this modification, each sentence now has a single valid structure.
 </p>
 
-<pre>
-VP    → ...
-Vrest → ...
-</pre>
+<h3> Left Recursion Explanation </h3>
+<h3> Removing Left Recursion </h3>
 
-<p>
-Present final grammar:
-</p>
+<h2> Implementation: </h2>
 
-<pre>
-S     → ...
-NP    → ...
-VP    → ...
-Vrest → ...
-PP    → ...
-</pre>
+<h2> Testing: </h2>
 
----
-
-<h2> Implementation </h2>
-
-<h3> Tool Selection </h3>
-
-<p>
-Explain that Python and NLTK are used.
-</p>
-
----
-
-<h3> Grammar Implementation </h3>
-
-```python
-# Insert grammar code here
+<h2> Analysis: </h2>
