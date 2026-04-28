@@ -231,9 +231,8 @@ were removed successfully.
 
 <h2> Testing: </h2>
 <p>
-Tests were run with strings that should be accepted and rejected. For each string, it was recorded whether the LL(1) parser accepted it and the resulting derivation or error encountered:
+Each sentence was tested to see if it is accepted by the grammar, along with its resulting structure or rejection.
 </p>
-
 <h3> Accepted strings: </h3>
 
 <ul>
@@ -276,21 +275,21 @@ However, it is ambiguous and contains left recursion, which makes parsing harder
 
 <h4> After Cleaning </h4>
 <p>
-After removing ambiguity and left recursion, the final grammar G3 is still Type 2.
-It remains context-free because the left side of each production is a single nonterminal.
-However, it is now cleaner, more deterministic, and better suited for LL(1) parsing.
+After removing ambiguity and left recursion, the grammar remains context-free. 
+It becomes cleaner and more deterministic, making it easier to analyze and parse.
 </p>
 
 <h3>Time Complexity</h3>
 <h4> Before Cleaning </h4>
 <p>
-Before cleaning, the grammar may require a general CFG parser, such as Earley or CYK.
-These parsers can take O(n³) time in the worst case because they may explore multiple possible parse trees.
+Before cleaning, the grammar may require a general CFG parser. 
+These parsers can take up to O(n³) time in the worst case, since they may need to explore multiple possible parse trees.
 </p>
 <h4> After Cleaning </h4>
 <p>
-After cleaning, the grammar can be parsed more efficiently using deterministic parsing techniques.
-An LL(1) parser can analyze the input in O(n) time because it reads the sentence from left to right and applies one production at a time without backtracking.
+After cleaning, the grammar becomes more efficient to parse. Since it is more deterministic, 
+the parser can process the input step by step without exploring multiple alternatives, 
+resulting in linear time performance.
 </p>
 
 <h2> Sources </h2>
